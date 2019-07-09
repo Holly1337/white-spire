@@ -1,9 +1,14 @@
 const express = require('express')
 const app = express()
-const port = 4000
+const port = 80
 const fetch = require('node-fetch')
+const path = require('path');
 
-app.get('/', (req, res) => res.send('This will contain the react app'))
+app.use(express.static('build'))
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname + 'build/index.html'));
+})
 
 app.get('/api/*', async (req, res) => {
   const jsonServerUrl = req.originalUrl.substr(5)
