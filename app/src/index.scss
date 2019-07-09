@@ -1,0 +1,127 @@
+$font-headline: 'Raleway', sans-serif;
+$font-text: 'Roboto', sans-serif;
+
+body {
+  background-color: #111111;
+  font-family: $font-text;
+  color: white;
+}
+
+.site-wrapper {
+  max-width: 850px;
+  width: 80%;
+  margin: 0 auto;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.last-updated {
+  margin: 20px 30px -20px 30px;
+}
+
+.header {
+  max-width: 650px;
+  padding: 30px 30px 0 30px;
+  color: black;
+  font-weight: 900;
+  font-size: 40px;
+  text-align: center;
+  margin: 0 auto;
+  height: auto;
+  width: 80%;
+  text-transform: uppercase;
+  font-family: $font-headline;
+
+  .main {
+    background-color: white;
+    padding: 10px 0;
+    margin: 0 auto;
+    width: 80%
+  }
+
+  .subtitle {
+    padding: 5px 0;
+    font-size: 20px;
+    background-color: #222222;
+    margin: 0 auto;
+    width: 60%;
+    color: white;
+    transform: rotate(-2deg);
+  }
+}
+
+table {
+  padding: 30px;
+  background-color: #0B0C10;
+  height: auto;
+
+  @media (max-width: 768px) {
+    padding: 30px 0;
+  }
+
+  thead tr th {
+    background-color: #3C3F4D;
+    font-weight: 700;
+    padding: 8px 20px;
+    text-transform: uppercase;
+    text-align: left;
+    font-family: $font-headline;
+  }
+
+  tr{
+    td {
+      padding: 8px 20px;
+    }
+    td:first-child {
+      width: 20%;
+    }
+
+    &:nth-child(2n) {
+      background-color: #25262e;
+    }
+    &:nth-child(2n + 1) {
+      background-color: #0b0b0f;
+    }
+  }
+}
+
+.rank {
+  margin-left: -10px;
+  display: inline-block;
+  width: 30px;
+  text-align: center;
+
+  .rank-change-icon {
+    display: block;
+    height: 14px;
+  }
+  .rank-change-value {
+    display: block;
+    font-size: 12px;
+  }
+
+  &.rank-down .rank-change-value {
+    margin-left: -4px;
+  }
+}
+
+.fa, .far {
+  &.fa-star {
+    font-weight: bold;
+    font-size: 0.6rem
+  }
+}
+
+.color-green {
+  color: lawngreen;
+}
+
+.color-red {
+  color: orangered;
+}
+
+.color-gold {
+  color: gold;
+}
+
