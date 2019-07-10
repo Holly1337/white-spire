@@ -19,7 +19,7 @@ const TableRow = ({ rank, rankChange, playerName, rankHistory }: TableRowProps) 
       <td>
         <PlayerName playerName={playerName} />
       </td>
-      <td>{rankHistory.slice(1).join(', ')}</td>
+      <td>{rankHistory.slice(1, 11).join(', ')}</td>
     </tr>
   )
 }

@@ -58,7 +58,7 @@ const App: React.FC = () => {
   const [leaderboard, setLeaderboard] = useState<LeaderboardData>([])
 
   useEffect(() => {
-    fetch('/api/leaderboard?_sort=id&_order=desc')
+    fetch('/api/leaderboard?_sort=id&_order=desc&_limit=10')
       .then(res => res.json())
       .then((data: LeaderboardData) => {
         if (data.length === 0) {
