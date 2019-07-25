@@ -1,10 +1,12 @@
 const express = require('express')
+const compression = require('compression')
 const app = express()
 const port = 80
 const fetch = require('node-fetch')
 const path = require('path');
 
 app.use(express.static('build'))
+app.use(compression())
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + 'build/index.html'));
