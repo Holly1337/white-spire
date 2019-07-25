@@ -1,32 +1,11 @@
 import React from 'react'
-import { PlayerData, PlayerHistory } from '../../App'
-import RankChangeIndicator from './RankChangeIndicator'
-import PlayerName from './PlayerName'
-
-interface TableRowProps  extends PlayerData {
-  rankHistory: number[]
-}
-
-const TableRow = ({ rank, rankChange, playerName, rankHistory }: TableRowProps) => {
-  return (
-    <tr>
-      <td>
-        <RankChangeIndicator change={rankChange} />
-        <span style={{ marginLeft: 5 }}>
-          {rank}
-        </span>
-      </td>
-      <td>
-        <PlayerName playerName={playerName} />
-      </td>
-      <td>{rankHistory.slice(1, 11).join(', ')}</td>
-    </tr>
-  )
-}
+import { LeaderboardData, PlayerData, PlayerHistory } from '../../App'
+import TableRow from './TableRow/TableRow'
 
 interface Props {
   players: PlayerData[]
   playerHistory: PlayerHistory
+  leaderboardData: LeaderboardData
 }
 
 const Table = (props: Props) => {
@@ -36,25 +15,27 @@ const Table = (props: Props) => {
   }
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Rank</th>
-          <th>Name</th>
-          <th>Rank History</th>
-        </tr>
-      </thead>
-      <tbody>
-      {
-        players.map(
-          (player, index: number) => {
-            const rankHistory = props.playerHistory[player.playerName]
-            return <TableRow key={index} {...player} rankHistory={rankHistory} />
+    <>
+      <div className='table'>
+        <div className='thead'>
+          <div className='tr'>
+            <div className='th rank-header'>Rank</div>
+            <div className='th name-header'>Name</div>
+            <div className='th name-header' style={{width: 80}}>History</div>
+          </div>
+        </div>
+        <div className='tbody'>
+          {
+            players.map(
+              (player, index: number) => {
+                // const rankHistory = props.playerHistory[player.playerName]
+                return <TableRow key={index} {...player} leaderboardData={props.leaderboardData} />
+              }
+            )
           }
-        )
-      }
-      </tbody>
-    </table>
+        </div>
+      </div>
+    </>
   )
 }
 

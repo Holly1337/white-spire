@@ -17,7 +17,13 @@ body {
 }
 
 .last-updated {
-  margin: 20px 30px -20px 30px;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0px -20px 0px;
+
+  @media (min-width: 768px) {
+    margin: 20px 30px -20px 30px;
+  }
 }
 
 .header {
@@ -51,32 +57,46 @@ body {
   }
 }
 
-table {
+.table {
   padding: 30px;
   background-color: #0B0C10;
   height: auto;
   margin: 0 auto;
-  width: 100%;
 
   @media (max-width: 768px) {
     padding: 30px 0;
   }
 
-  thead tr th {
-    background-color: #3C3F4D;
-    font-weight: 700;
-    padding: 8px 20px;
-    text-transform: uppercase;
-    text-align: left;
-    font-family: $font-headline;
+  .thead {
+    .tr {
+      display: flex;
+    }
+
+    .tr .th {
+      background-color: #3C3F4D;
+      font-weight: 700;
+      padding: 8px 20px;
+      text-transform: uppercase;
+      text-align: left;
+      font-family: $font-headline;
+      border: 1px solid black;
+      &.rank-header {
+        width: 82px;
+      }
+      &.name-header {
+        width: calc(100% - 105px);
+      }
+    }
+
   }
 
-  tr{
-    td {
+
+  .tr{
+    .td {
       padding: 8px 20px;
     }
-    td:first-child {
-      width: 60px;
+    .td:first-child {
+      width: 100px;
     }
 
     &:nth-child(2n) {
@@ -86,6 +106,18 @@ table {
       background-color: #0b0b0f;
     }
   }
+}
+
+.player-rank {
+  width: 80px;
+  padding: 8px 20px;
+  display: inline-block;
+  border-right: 2px solid black;
+}
+
+.player-name {
+  padding: 8px 20px;
+  display: inline-block;
 }
 
 .rank {
@@ -127,3 +159,24 @@ table {
   color: gold;
 }
 
+button.button-history {
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  /* show a hand cursor on hover; some argue that we
+  should keep the default arrow cursor for buttons */
+  cursor: pointer;
+  border: 1px solid white;
+  padding: 1px 10px;
+  border-radius: 5px;
+  &:hover {
+    border-color: #939393;
+  }
+  &:active {
+    background-color: white;
+    color: black;
+  }
+  &:focus {
+    outline: none;
+  }
+}

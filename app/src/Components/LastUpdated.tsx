@@ -6,15 +6,14 @@ interface Props {
 
 const LastUpdated = ({ date }: Props) => {
   return (
-    <div className='last-updated'>
+    <div className='last-updated' style={{
+      display: 'flex',
+      justifyContent: 'space-between'
+    }}>
       <span>
         Last updated: {date.toLocaleString()}
       </span>
-      <span style={{
-        float: 'right',
-        color: '#999999',
-        marginRight: 25
-      }}>
+      <span style={{ color: '#999999' }}>
         <small><i>Updates every hour</i></small>
       </span>
     </div>

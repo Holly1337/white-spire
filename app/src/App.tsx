@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Table from './Components/Table/Table'
 import LastUpdated from './Components/LastUpdated'
 
+type PlayerName = string
+
 interface Rank {
   rank: number,
-  playerName: string
+  playerName: PlayerName
 }
 
 type Ranks = Rank[]
@@ -14,7 +16,7 @@ interface LeaderboardEntry {
   ranks: Ranks
 }
 
-type LeaderboardData = LeaderboardEntry[]
+export type LeaderboardData = LeaderboardEntry[]
 
 export type RankChange = number | 'new'
 
@@ -58,7 +60,7 @@ const App: React.FC = () => {
   const [leaderboard, setLeaderboard] = useState<LeaderboardData>([])
 
   useEffect(() => {
-    fetch('/api/leaderboard?_sort=id&_order=desc&_limit=10')
+    fetch('/api/leaderboard?_sort=id&_order=desc&_limit=48')
       .then(res => res.json())
       .then((data: LeaderboardData) => {
         if (data.length === 0) {
@@ -95,8 +97,10 @@ const App: React.FC = () => {
           Dota Underlords Leaderboard History
         </div>
       </div>
-      <LastUpdated date={lastUpdated}/>
-      <Table players={players} playerHistory={playerHistory} />
+      <div style={{ width: '100%' }}>
+        <LastUpdated date={lastUpdated} />
+      </div>
+      <Table players={players} playerHistory={playerHistory} leaderboardData={leaderboard} />
       <div style={{ textAlign: 'center' }}>
         <small>
           Data is based on <a
