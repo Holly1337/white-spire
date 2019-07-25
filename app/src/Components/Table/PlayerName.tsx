@@ -1,4 +1,5 @@
 import React from 'react'
+import douyuIcon from '../../assets/images/douyu-icon.png'
 
 interface Props {
   playerName: string
@@ -59,9 +60,7 @@ const DouyuName = ({ playerName }: Props) => {
       style={{ color: 'white' }}
     >
       {playerName}
-      <span style={{ marginLeft: 10 }}>
-        <i className='fas fa-video' />
-      </span>
+      <img src={douyuIcon} alt={`douyu ${playerName}`} style={{ marginLeft: 8, height: 19}} />
     </a>
   )
 }
