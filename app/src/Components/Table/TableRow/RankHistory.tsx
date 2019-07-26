@@ -51,7 +51,7 @@ const RankHistory = (props: Props) => {
             return date.toLocaleTimeString().substr(0, 5)
           }}
         />
-        <YAxis stroke='white'/>
+        <YAxis stroke='white' reversed={true} />
         <CartesianGrid stroke="#666666" vertical={false} />
         <Line
           type="step"
