@@ -1,5 +1,6 @@
 import React from 'react'
 import douyuIcon from '../../assets/images/douyu-icon.png'
+import { KNOWN_TWITCH_STREAMERS } from '../../constants'
 
 interface Props {
   playerName: string
@@ -26,11 +27,17 @@ const getStreamtype = (playerName: string): StreamTypes => {
   return null
 }
 
+interface StreamerProps {
+  playerName: string
+  link?: string
+}
 
-const TwitchName = ({ playerName }: Props) => {
-  const startIndex = playerName.indexOf(TWITCH) + 3
-  const channel = playerName.substr(startIndex)
-  const link = `https://twitch.tv/${channel}`
+const TwitchName = ({ playerName, link }: StreamerProps) => {
+  if (typeof link === 'undefined') {
+    const startIndex = playerName.indexOf(TWITCH) + 3
+    const channel = playerName.substr(startIndex)
+    link = `https://twitch.tv/${channel}`
+  }
   return (
     <a
       href={link}
@@ -67,6 +74,11 @@ const DouyuName = ({ playerName }: Props) => {
 }
 
 const PlayerName = ({ playerName }: Props) => {
+  const twitchLink = KNOWN_TWITCH_STREAMERS[playerName.toLowerCase()]
+  if (typeof twitchLink !== 'undefined') {
+    return <TwitchName playerName={playerName} link={twitchLink} />
+  }
+
   const streamType = getStreamtype(playerName)
   switch (streamType) {
     case 'douyu':
