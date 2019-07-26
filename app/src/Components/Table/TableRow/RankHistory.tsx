@@ -28,12 +28,6 @@ const buildRankHistory = (pName: string, leaderboardData: LeaderboardData): Rank
   ).reverse()
 }
 
-const customizedTick = (tick: number) => {
-  return (
-    <div>custom tick</div>
-  )
-}
-
 const RankHistory = (props: Props) => {
   const data: RankData[] = buildRankHistory(props.playerName, props.leaderboardData)
   console.log(data)
