@@ -13,7 +13,7 @@ const DOUYO_REGEXP = /(\d[\d]+)/g
 
 type StreamTypes = 'twitch' | 'douyu' | 'huya' | null
 
-const getSteamtype = (playerName: string): StreamTypes => {
+const getStreamtype = (playerName: string): StreamTypes => {
   if (playerName.includes(TWITCH)) {
     return 'twitch'
   }
@@ -25,6 +25,7 @@ const getSteamtype = (playerName: string): StreamTypes => {
   // }
   return null
 }
+
 
 const TwitchName = ({ playerName }: Props) => {
   const startIndex = playerName.indexOf(TWITCH) + 3
@@ -66,7 +67,7 @@ const DouyuName = ({ playerName }: Props) => {
 }
 
 const PlayerName = ({ playerName }: Props) => {
-  const streamType = getSteamtype(playerName)
+  const streamType = getStreamtype(playerName)
   switch (streamType) {
     case 'douyu':
       return <DouyuName playerName={playerName} />
