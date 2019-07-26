@@ -20,4 +20,6 @@ export const KNOWN_TWITCH_STREAMERS: KnownStreamers = {
   'bebe872': 'https://www.twitch.tv/bebe872',
   'kondo, marie': 'https://www.twitch.tv/strifecro',
   'gaara': 'https://www.twitch.tv/gaara',
+  'frostieuk': 'https://www.twitch.tv/FrostieUK',
+  'swim': 'https://www.twitch.tv/swimstrim',
 }
