@@ -2,7 +2,6 @@ import React from 'react'
 import {
   LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Label,
 } from 'recharts'
-import { LeaderboardData } from '../../../App'
 
 interface Props {
   playerName: string

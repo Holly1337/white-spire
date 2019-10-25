@@ -2,28 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Table from './Components/Table/Table'
 import LastUpdated from './Components/LastUpdated'
 
-type PlayerName = string
-
-interface Rank {
-  rank: number,
-  playerName: PlayerName
-}
-
-type Ranks = Rank[]
-
-interface LeaderboardEntry {
-  id: number,
-  ranks: Ranks
-}
-
-export type LeaderboardData = LeaderboardEntry[]
-
-export type RankChange = number | 'new'
-
-export interface PlayerData extends Rank {
-  rankChange: RankChange
-}
-
 const rankChange = (player: Rank, leaderboard: LeaderboardData): RankChange => {
   if (leaderboard.length <= 1) {
     return 0
@@ -38,9 +16,6 @@ const rankChange = (player: Rank, leaderboard: LeaderboardData): RankChange => {
   return lastPlayerEntry.rank - player.rank
 }
 
-export interface PlayerHistory {
-  [id: string]: number[]
-}
 
 const buildPlayerHistory = (leaderboard: LeaderboardData): PlayerHistory => {
   const playerHistory: PlayerHistory = {}
@@ -60,7 +35,7 @@ const App: React.FC = () => {
   const [leaderboard, setLeaderboard] = useState<LeaderboardData>([])
 
   useEffect(() => {
-    fetch('/api/leaderboard?_sort=id&_order=desc&_limit=48')
+    fetch('/api/v1/leaderboard')
       .then(res => res.json())
       .then((data: LeaderboardData) => {
         if (data.length === 0) {
@@ -103,21 +78,22 @@ const App: React.FC = () => {
       <Table players={players} playerHistory={playerHistory} leaderboardData={leaderboard} />
       <div style={{ textAlign: 'center' }}>
         <small>
-          Data is based on <a
-          style={{
-            color: 'white'
-          }}
-          href='https://underlords.com/leaderboard'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <strong>underlords.com/leaderboard</strong>
-        </a>.
+          Data is based on
+          <a
+            style={{
+              color: 'white'
+            }}
+            href='https://underlords.com/leaderboard'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <strong>underlords.com/leaderboard</strong>
+          </a>.
           Data is not accurate for duplicate playernames
         </small>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
