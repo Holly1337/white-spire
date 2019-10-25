@@ -1,6 +1,5 @@
 import React from 'react'
 import classnames from 'classnames'
-import { RankChange } from '../../App'
 
 interface Props {
   change: RankChange

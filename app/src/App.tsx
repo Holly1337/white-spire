@@ -2,28 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Table from './Components/Table/Table'
 import LastUpdated from './Components/LastUpdated'
 
-type PlayerName = string
-
-interface Rank {
-  rank: number,
-  playerName: PlayerName
-}
-
-type Ranks = Rank[]
-
-interface LeaderboardEntry {
-  id: number,
-  ranks: Ranks
-}
-
-export type LeaderboardData = LeaderboardEntry[]
-
-export type RankChange = number | 'new'
-
-export interface PlayerData extends Rank {
-  rankChange: RankChange
-}
-
 const rankChange = (player: Rank, leaderboard: LeaderboardData): RankChange => {
   if (leaderboard.length <= 1) {
     return 0
@@ -36,10 +14,6 @@ const rankChange = (player: Rank, leaderboard: LeaderboardData): RankChange => {
     return 'new'
   }
   return lastPlayerEntry.rank - player.rank
-}
-
-export interface PlayerHistory {
-  [id: string]: number[]
 }
 
 const buildPlayerHistory = (leaderboard: LeaderboardData): PlayerHistory => {
@@ -55,13 +29,47 @@ const buildPlayerHistory = (leaderboard: LeaderboardData): PlayerHistory => {
   return playerHistory
 }
 
+// quick fix to turn the new api response into the old format. Will be removed later
+const prepareData = (json: object[]): LeaderboardData => {
+  const byDate: { [key: string]: Ranks } = {}
+
+  json.forEach((data: any) => {
+    const timestamp: string = data.timestamp as string
+    const seconds = new Date(timestamp).getTime()
+    const newData: Rank = {
+      playerName: data.playername,
+      rank: data.position,
+      score: data.score
+    }
+    if (!Array.isArray(byDate[seconds])) {
+      byDate[seconds] = []
+    }
+    byDate[seconds].push(newData)
+  })
+
+  const leaderboard: LeaderboardData = Object.entries(byDate).map(
+    ([timestamp, ranks]: [string, Ranks]): LeaderboardEntry => {
+      ranks.sort((rank1, rank2) => rank1.rank - rank2.rank)
+      return {
+        id: parseInt(timestamp, 10),
+        ranks
+      }
+    }
+  )
+
+  leaderboard.sort((entry1, entry2) => entry2.id - entry1.id)
+
+  return leaderboard
+}
+
 const App: React.FC = () => {
   const [ranks, setRanks] = useState<Ranks>([])
   const [leaderboard, setLeaderboard] = useState<LeaderboardData>([])
 
   useEffect(() => {
-    fetch('/api/leaderboard?_sort=id&_order=desc&_limit=48')
+    fetch('/api/v1/leaderboard')
       .then(res => res.json())
+      .then(prepareData)
       .then((data: LeaderboardData) => {
         if (data.length === 0) {
           return
@@ -103,21 +111,22 @@ const App: React.FC = () => {
       <Table players={players} playerHistory={playerHistory} leaderboardData={leaderboard} />
       <div style={{ textAlign: 'center' }}>
         <small>
-          Data is based on <a
-          style={{
-            color: 'white'
-          }}
-          href='https://underlords.com/leaderboard'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <strong>underlords.com/leaderboard</strong>
-        </a>.
+          Data is based on
+          <a
+            style={{
+              color: 'white'
+            }}
+            href='https://underlords.com/leaderboard'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <strong>underlords.com/leaderboard</strong>
+          </a>.
           Data is not accurate for duplicate playernames
         </small>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

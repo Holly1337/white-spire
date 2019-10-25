@@ -1,4 +1,3 @@
-import { LeaderboardData, PlayerData } from '../../../App'
 import RankChangeIndicator from '../RankChangeIndicator'
 import PlayerName from '../PlayerName'
 import React, { useState } from 'react'

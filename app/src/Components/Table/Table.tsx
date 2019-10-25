@@ -1,5 +1,4 @@
 import React from 'react'
-import { LeaderboardData, PlayerData, PlayerHistory } from '../../App'
 import TableRow from './TableRow/TableRow'
 
 interface Props {
