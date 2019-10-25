@@ -1,0 +1,19 @@
+name: Deploy
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  deploy:
+    name: Deploy to server
+    runs-on: ubuntu-latest
+    steps:
+    - name: executes remote build script
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: "cd /home/spire/white-spire && ./deploy.sh"
