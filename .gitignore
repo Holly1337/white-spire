@@ -1,3 +1,4 @@
 node_modules
 express-server/build
 app/build
+.env
