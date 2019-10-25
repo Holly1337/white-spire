@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "pm2 start ecosystem.config.js",
+    "stop": "pm2 stop ecosystem.config.js"
   },
   "dependencies": {
     "compression": "^1.7.4",
@@ -17,6 +18,7 @@
     "morgan": "~1.9.1",
     "mysql2": "^1.6.5",
     "node-fetch": "^2.6.0",
+    "pm2": "^4.1.2",
     "sequelize": "^5.12.2",
     "sequelize-cli": "^5.5.0",
     "sqlite3": "^4.0.9"
