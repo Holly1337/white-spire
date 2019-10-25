@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "tslint-config-standard",
+    "tslint-react",
+    "tslint-react-hooks"
+  ],
+  "rules": {
+    "jsx-space-before-trailing-slash": true,
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks-nesting": "error"
+  }
+}
