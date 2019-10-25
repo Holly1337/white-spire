@@ -16,7 +16,6 @@ const rankChange = (player: Rank, leaderboard: LeaderboardData): RankChange => {
   return lastPlayerEntry.rank - player.rank
 }
 
-
 const buildPlayerHistory = (leaderboard: LeaderboardData): PlayerHistory => {
   const playerHistory: PlayerHistory = {}
   leaderboard.forEach(entry => {
@@ -30,6 +29,39 @@ const buildPlayerHistory = (leaderboard: LeaderboardData): PlayerHistory => {
   return playerHistory
 }
 
+// quick fix to turn the new api response into the old format. Will be removed later
+const prepareData = (json: object[]): LeaderboardData => {
+  const byDate: { [key: string]: Ranks } = {}
+
+  json.forEach((data: any) => {
+    const timestamp: string = data.timestamp as string
+    const seconds = new Date(timestamp).getTime()
+    const newData: Rank = {
+      playerName: data.playername,
+      rank: data.position,
+      score: data.score
+    }
+    if (!Array.isArray(byDate[seconds])) {
+      byDate[seconds] = []
+    }
+    byDate[seconds].push(newData)
+  })
+
+  const leaderboard: LeaderboardData = Object.entries(byDate).map(
+    ([timestamp, ranks]: [string, Ranks]): LeaderboardEntry => {
+      ranks.sort((rank1, rank2) => rank1.rank - rank2.rank)
+      return {
+        id: parseInt(timestamp, 10),
+        ranks
+      }
+    }
+  )
+
+  leaderboard.sort((entry1, entry2) => entry2.id - entry1.id)
+
+  return leaderboard
+}
+
 const App: React.FC = () => {
   const [ranks, setRanks] = useState<Ranks>([])
   const [leaderboard, setLeaderboard] = useState<LeaderboardData>([])
@@ -37,6 +69,7 @@ const App: React.FC = () => {
   useEffect(() => {
     fetch('/api/v1/leaderboard')
       .then(res => res.json())
+      .then(prepareData)
       .then((data: LeaderboardData) => {
         if (data.length === 0) {
           return
