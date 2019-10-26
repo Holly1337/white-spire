@@ -3,7 +3,7 @@ type PlayerName = string
 interface Rank {
   rank: number,
   playerName: PlayerName,
-  score?: number
+  score: number
 }
 
 type Ranks = Rank[]

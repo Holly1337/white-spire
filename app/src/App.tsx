@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Table from './Components/Table/Table'
 import LastUpdated from './Components/LastUpdated'
+import DataLoadingIndicator from './Components/DataLoadingIndicator'
+import Header from './Components/Layout/Header'
+import SiteWrapper from './Components/Layout/SiteWrapper'
+import DataInfoFooter from './Components/Layout/DataInfoFooter'
 
 const rankChange = (player: Rank, leaderboard: LeaderboardData): RankChange => {
   if (leaderboard.length <= 1) {
@@ -63,7 +67,7 @@ const prepareData = (json: object[]): LeaderboardData => {
 }
 
 const App: React.FC = () => {
-  const [ranks, setRanks] = useState<Ranks>([])
+  const [ranks, setRanks] = useState<Ranks | null>(null)
   const [leaderboard, setLeaderboard] = useState<LeaderboardData>([])
 
   useEffect(() => {
@@ -78,6 +82,15 @@ const App: React.FC = () => {
         setRanks(data[0].ranks)
       })
   }, [])
+
+  if (ranks === null) {
+    return (
+      <SiteWrapper>
+        <Header/>
+        <DataLoadingIndicator />
+      </SiteWrapper>
+    )
+  }
 
   const players: PlayerData[] = ranks.map(rank => {
     return {
@@ -96,36 +109,14 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className='site-wrapper'>
-      <div className='header'>
-        <div className='main'>
-          LORDS OF WHITE SPIRE
-        </div>
-        <div className='subtitle'>
-          Dota Underlords Leaderboard History
-        </div>
-      </div>
+    <SiteWrapper>
+      <Header />
       <div style={{ width: '100%' }}>
         <LastUpdated date={lastUpdated} />
       </div>
       <Table players={players} playerHistory={playerHistory} leaderboardData={leaderboard} />
-      <div style={{ textAlign: 'center' }}>
-        <small>
-          Data is based on
-          <a
-            style={{
-              color: 'white'
-            }}
-            href='https://underlords.com/leaderboard'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <strong>underlords.com/leaderboard</strong>
-          </a>.
-          Data is not accurate for duplicate playernames
-        </small>
-      </div>
-    </div>
+      <DataInfoFooter />
+    </SiteWrapper>
   )
 }
 

@@ -10,7 +10,7 @@ interface Props {
 const Table = (props: Props) => {
   const { players } = props
   if (players.length === 0) {
-    return <h1 style={{textAlign: 'center'}}>Loading Data</h1>
+    return <h1 className='text-center'>No data yet :(</h1>
   }
 
   return (
