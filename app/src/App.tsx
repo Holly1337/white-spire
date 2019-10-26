@@ -76,6 +76,7 @@ const App: React.FC = () => {
       .then(prepareData)
       .then((data: LeaderboardData) => {
         if (data.length === 0) {
+          setRanks([])
           return
         }
         setLeaderboard(data)
