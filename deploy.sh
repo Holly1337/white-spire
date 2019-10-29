@@ -20,4 +20,5 @@ cp -R app/build express-server/build
 echo 'start express server'
 cd express-server || exit
 npm install
+npm run migrate
 npm run start

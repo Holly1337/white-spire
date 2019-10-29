@@ -22,9 +22,9 @@ const processHtml = (html) => {
     return
   }
 
-  let entries = ranks.map(
+  let entries = (Array.from(ranks)).map(
     (rankElement) => {
-      const position = parseInt(rankElement.querySelector('.position').textContent, 10)
+      const position = parseInt(rankElement.querySelector('.rank').textContent, 10)
       const playername = rankElement.querySelector('.player').textContent
       const score = parseInt(rankElement.querySelector('.rankscore').textContent, 10)
 
