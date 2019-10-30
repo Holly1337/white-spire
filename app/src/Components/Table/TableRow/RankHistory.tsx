@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  Brush,
   CartesianGrid,
   Legend,
   Line,
@@ -15,17 +16,19 @@ interface Props {
   data: RankData[]
 }
 
-const RankHistory: React.FC<Props> = ({ data }) => {
-  // limit to last 48 entries
-  data = [...data].reverse().slice(0, 48)
+const DEFAULT_ENTRIES_SHOWN = 10
 
+const RankHistory: React.FC<Props> = ({ data }) => {
+  data = [...data].reverse()
   const rankDomain = getRankDomain(data)
   const scoreDomain = getScoreDomain(data)
 
-  const tickFormatter: TickFormatterFunction = (tickData) => {
+  const yAxisTickFormatter: TickFormatterFunction = (tickData) => {
     const date = new Date(tickData)
     return date.toLocaleTimeString().substr(0, 5)
   }
+  const brushTickFormatter = (date: number) => new Date(date).toLocaleDateString()
+  const brushStartIndex = Math.max(0, data.length - DEFAULT_ENTRIES_SHOWN)
 
   return (
     <ResponsiveContainer width={'100%'} aspect={2 / 1}>
@@ -36,12 +39,24 @@ const RankHistory: React.FC<Props> = ({ data }) => {
         <XAxis
           dataKey='date'
           stroke='white'
-          tickFormatter={tickFormatter}
+          tickFormatter={yAxisTickFormatter}
         />
         <CartesianGrid stroke='#666666' vertical={false} />
         <YAxis yAxisId={'left'} orientation='left' stroke='white' reversed={true} domain={rankDomain} />
         <YAxis yAxisId={'right'} orientation='right' stroke='gold' reversed={false} domain={scoreDomain} />
         <Legend verticalAlign='top' height={36} />
+        {
+          data.length > DEFAULT_ENTRIES_SHOWN && (
+            <Brush
+              dataKey={'date'}
+              startIndex={brushStartIndex}
+              endIndex={data.length - 1}
+              tickFormatter={brushTickFormatter}
+              stroke='white'
+              fill='#25262e'
+            />
+          )
+        }
         <Line
           type='step'
           dot={false}
