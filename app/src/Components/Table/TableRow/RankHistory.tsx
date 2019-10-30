@@ -1,6 +1,13 @@
 import React from 'react'
 import {
-  LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Label, AxisDomain, Legend, TickFormatterFunction
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  TickFormatterFunction,
+  XAxis,
+  YAxis
 } from 'recharts'
 import { getRankDomain, getScoreDomain } from '../../../lib/chartDomains'
 
