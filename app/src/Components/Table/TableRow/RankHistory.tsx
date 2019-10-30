@@ -7,6 +7,7 @@ import {
   LineChart,
   ResponsiveContainer,
   TickFormatterFunction,
+  Tooltip,
   XAxis,
   YAxis
 } from 'recharts'
@@ -45,6 +46,12 @@ const RankHistory: React.FC<Props> = ({ data }) => {
         <YAxis yAxisId={'left'} orientation='left' stroke='white' reversed={true} domain={rankDomain} />
         <YAxis yAxisId={'right'} orientation='right' stroke='gold' reversed={false} domain={scoreDomain} />
         <Legend verticalAlign='top' height={36} />
+        <Tooltip
+          itemStyle={{ color: 'white' }}
+          labelStyle={{ color: 'white', textDecoration: 'underline', paddingBottom: 5, paddingTop: 5 }}
+          contentStyle={{ backgroundColor: 'black', padding: 10 }}
+          labelFormatter={(label) => <span>{new Date(label).toLocaleString()}</span>}
+        />
         {
           data.length > DEFAULT_ENTRIES_SHOWN && (
             <Brush
