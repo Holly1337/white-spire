@@ -2,6 +2,8 @@ import RankChangeIndicator from '../RankChangeIndicator'
 import PlayerName from '../PlayerName'
 import React, { useState } from 'react'
 import RankHistory from './RankHistory'
+import LoadingRankHistoryData from '../../Notifications/LoadingRankHistoryData'
+import LoadingRankHistoryDataError from '../../Notifications/LoadingRankHistoryDataError'
 
 interface TableRowProps {
   entry: RankEntry
@@ -52,9 +54,9 @@ const TableRow: React.FC<TableRowProps> = ({ entry, playerData }) => {
   let rankHistory = null
   if (showHistory) {
     if (rankData === null) {
-      rankHistory = <div>Loading data <i className='fa fa-spinner fa-spin' /></div>
+      rankHistory = <LoadingRankHistoryData />
     } else if (typeof rankData === 'undefined') {
-      rankHistory = <div>There was an error loading the history data :(</div>
+      rankHistory = <LoadingRankHistoryDataError />
     } else {
       rankHistory = <RankHistory data={rankData} />
     }
