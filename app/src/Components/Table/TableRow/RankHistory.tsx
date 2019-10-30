@@ -1,59 +1,49 @@
 import React from 'react'
 import {
-  LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Label,
+  LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Label
 } from 'recharts'
 
 interface Props {
-  playerName: string
-  leaderboardData: LeaderboardData
+  data: RankData[]
 }
 
-export interface RankData {
-  date: number,
-  rank: number | null
-}
-
-const buildRankHistory = (pName: string, leaderboardData: LeaderboardData): RankData[] => {
-  return Object.values(leaderboardData).map(
-    ({id, ranks}): RankData => {
-      const rankEntry = ranks.find(
-        ({ rank, playerName }) => playerName === pName
-      )
-      return {
-        date: id,
-        rank: rankEntry ? rankEntry.rank : null
-      }
-    }
-  ).reverse()
-}
-
-const RankHistory = (props: Props) => {
-  const data: RankData[] = buildRankHistory(props.playerName, props.leaderboardData)
-  console.log(data)
+const RankHistory: React.FC<Props> = ({ data }) => {
+  // limit to last 48 entries
+  data = [...data].reverse().slice(0, 48)
   return (
-    <ResponsiveContainer width={'100%'} aspect={2/1}>
+    <ResponsiveContainer width={'100%'} aspect={2 / 1}>
       <LineChart
         data={data}
         margin={{ top: 20, right: 20, left: 10, bottom: 20 }}
       >
         <XAxis
-          dataKey="date"
+          dataKey='date'
           stroke='white'
           tickFormatter={(tickData) => {
             const date = new Date(tickData)
             return date.toLocaleTimeString().substr(0, 5)
           }}
         />
-        <YAxis stroke='white' reversed={true} />
-        <CartesianGrid stroke="#666666" vertical={false} />
+        <CartesianGrid stroke='#666666' vertical={false} />
+        <YAxis yAxisId={'left'} stroke='white' reversed={true} />
+        <YAxis yAxisId={'right'} orientation='right' stroke='#ffff65' reversed={false} />
         <Line
-          type="step"
+          type='step'
           dot={false}
-          dataKey="rank"
-          stroke="white"
+          dataKey='rank'
+          stroke='white'
           strokeWidth={3}
           isAnimationActive={false}
-          yAxisId={0}
+          yAxisId={'left'}
+        />
+        <Line
+          type='step'
+          dot={false}
+          dataKey='score'
+          stroke='#ffff65'
+          strokeWidth={3}
+          isAnimationActive={false}
+          yAxisId={'right'}
         />
       </LineChart>
     </ResponsiveContainer>

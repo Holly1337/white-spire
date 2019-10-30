@@ -5,9 +5,26 @@ body {
   background-color: #111111;
   font-family: $font-text;
   color: white;
+
+  //background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+  //linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+  //linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+  //linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+  //linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+  //linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+  //background-color: #131313;
+  //background-size: 20px 20px;
+
+  // pattern from https://www.heropatterns.com/
+  //background-color: #222222;
+  //background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23111111' fill-opacity='0.44'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-color: #181818;
+  background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23000000' fill-opacity='0.44'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
 }
 
 .site-wrapper {
+  min-height: 100vh;
   max-width: 850px;
   width: 80%;
   margin: 0 auto;
@@ -24,6 +41,15 @@ body {
   @media (min-width: 768px) {
     margin: 20px 30px -20px 30px;
   }
+}
+
+@mixin table-item {
+  text-align: center;
+  padding: 8px 20px;
+}
+
+@mixin flex-auto {
+  flex: 1 1 auto
 }
 
 .header {
@@ -59,12 +85,33 @@ body {
 
 .table {
   padding: 30px;
+  padding-top: 35px;
   background-color: #0B0C10;
   height: auto;
   margin: 0 auto;
 
   @media (max-width: 768px) {
     padding: 30px 0;
+  }
+
+  .rank-column, .score-column, .history-column {
+    @include table-item;
+    width: 85px
+  }
+
+  .name-column {
+    @include table-item;
+    text-align: left;
+    @include flex-auto;
+    align-self: center;
+  }
+
+  .score-column {
+    align-self: center;
+  }
+
+  .history-column {
+    align-self: center;
   }
 
   .thead {
@@ -75,28 +122,17 @@ body {
     .tr .th {
       background-color: #3C3F4D;
       font-weight: 700;
-      padding: 8px 20px;
       text-transform: uppercase;
-      text-align: left;
       font-family: $font-headline;
-      border: 1px solid black;
-      &.rank-header {
-        width: 82px;
-      }
-      &.name-header {
-        width: calc(100% - 105px);
-      }
     }
 
   }
 
 
   .tr{
+    display: flex;
     .td {
       padding: 8px 20px;
-    }
-    .td:first-child {
-      width: 100px;
     }
 
     &:nth-child(2n) {
@@ -108,8 +144,16 @@ body {
   }
 }
 
+.table-item {
+  @include table-item
+}
+
+.flex-auto {
+  @include flex-auto
+}
+
 .player-rank {
-  width: 80px;
+  width: 65px;
   padding: 8px 20px;
   display: inline-block;
   border-right: 2px solid black;
@@ -121,22 +165,24 @@ body {
 }
 
 .rank {
-  margin-left: -10px;
-  display: inline-block;
-  width: 30px;
-  text-align: center;
-
-  .rank-change-icon {
-    display: block;
-    height: 14px;
-  }
-  .rank-change-value {
-    display: block;
+  display: flex;
+  .rank-change {
+    width: 50%;
     font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    .rank-change-icon{
+      display: inline-block;
+      width: 100%;
+    }
+    .rank-change-value{
+      display: block;
+    }
   }
-
-  &.rank-down .rank-change-value {
-    margin-left: -4px;
+  .rank-value {
+    align-self: center;
+    width: 50%;
+    text-align: left;
   }
 }
 
@@ -181,7 +227,31 @@ button.button-history {
   }
 }
 
+.player-score {
+  float: right;
+  width: 80px;
+  padding-right: 20px;
+  text-align: center;
+}
 
 .text-center {
+  text-align: center;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 10px;
+  a {
+    color: white;
+  }
+}
+
+.loading-history {
+  padding: 20px;
+  text-align: center;
+}
+
+.loading-history-error {
+  padding: 20px;
   text-align: center;
 }

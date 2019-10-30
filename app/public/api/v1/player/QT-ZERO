@@ -1,0 +1,23 @@
+{
+  "count": 2,
+  "rows": [
+    {
+      "id": 16,
+      "timestamp": "2019-10-30T09:40:04.000Z",
+      "playername": "QT-ZERO",
+      "position": 2,
+      "score": 15100,
+      "createdAt": "2019-10-30T09:40:04.000Z",
+      "updatedAt": "2019-10-30T09:40:04.000Z"
+    },
+    {
+      "id": 6,
+      "timestamp": "2019-10-30T07:39:40.000Z",
+      "playername": "QT-ZERO",
+      "position": 1,
+      "score": 15100,
+      "createdAt": "2019-10-30T07:39:40.000Z",
+      "updatedAt": "2019-10-30T07:39:40.000Z"
+    }
+  ]
+}
