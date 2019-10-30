@@ -18,9 +18,10 @@ const Table = (props: Props) => {
       <div className='table'>
         <div className='thead'>
           <div className='tr'>
-            <div className='th rank-header'>Rank</div>
-            <div className='th name-header'>Name</div>
-            <div className='th name-header' style={{width: 80}}>History</div>
+            <div className='th rank-column'>Rank</div>
+            <div className='th name-column'>Name</div>
+            <div className='th score-column'>Score</div>
+            <div className='th history-column'>History</div>
           </div>
         </div>
         <div className='tbody'>

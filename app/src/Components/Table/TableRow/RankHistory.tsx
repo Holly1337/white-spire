@@ -29,9 +29,8 @@ const buildRankHistory = (pName: string, leaderboardData: LeaderboardData): Rank
 
 const RankHistory = (props: Props) => {
   const data: RankData[] = buildRankHistory(props.playerName, props.leaderboardData)
-  console.log(data)
   return (
-    <ResponsiveContainer width={'100%'} aspect={2/1}>
+    <ResponsiveContainer width={'100%'} aspect={2 / 1}>
       <LineChart
         data={data}
         margin={{ top: 20, right: 20, left: 10, bottom: 20 }}

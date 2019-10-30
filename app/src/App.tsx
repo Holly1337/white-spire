@@ -87,7 +87,7 @@ const App: React.FC = () => {
   if (ranks === null) {
     return (
       <SiteWrapper>
-        <Header/>
+        <Header />
         <DataLoadingIndicator />
       </SiteWrapper>
     )
@@ -112,9 +112,7 @@ const App: React.FC = () => {
   return (
     <SiteWrapper>
       <Header />
-      <div style={{ width: '100%' }}>
-        <LastUpdated date={lastUpdated} />
-      </div>
+      <LastUpdated date={lastUpdated} />
       <Table players={players} playerHistory={playerHistory} leaderboardData={leaderboard} />
       <DataInfoFooter />
     </SiteWrapper>

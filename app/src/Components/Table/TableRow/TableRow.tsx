@@ -14,19 +14,19 @@ const TableRow = ({ rank, rankChange, playerName, leaderboardData }: TableRowPro
   }
   return (
     <>
-      <div className='tr' style={{ display: 'flex' }}>
-        <span className='player-rank'>
-          <RankChangeIndicator change={rankChange} />
-          <span style={{ marginLeft: 5 }}>
-            {rank}
-          </span>
+      <div className='tr'>
+        <span className='rank-column'>
+          <RankChangeIndicator rank={rank} change={rankChange} />
         </span>
-        <span className='player-name' style={{ width: '100%' }}>
+        <span className='name-column'>
           <PlayerName playerName={playerName} />
-          <span style={{ float: 'right' }}>
+        </span>
+        <span className='score-column'>
+          {1337}
+        </span>
+        <span className='history-column'>
             <button
               className='button-history'
-              style={{ cursor: 'pointer' }}
               onClick={toggleHistory}
             >
               {
@@ -35,7 +35,6 @@ const TableRow = ({ rank, rankChange, playerName, leaderboardData }: TableRowPro
                   : <i className='fas fa-chart-line' />
               }
             </button>
-          </span>
         </span>
       </div>
       {

@@ -2,7 +2,7 @@ import React from 'react'
 
 const DataInfoFooter = () => {
   return (
-    <div className='text-center'>
+    <div className='footer'>
       <small>
         Data is based on{' '}
         <a
