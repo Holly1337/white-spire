@@ -1,7 +1,7 @@
 import { AxisDomain } from 'recharts'
 
 const RANK_MARGIN = 1
-const SCORE_MARGIN = 1
+const SCORE_MARGIN = 50
 
 export const getRankDomain = (data: RankData[]): [AxisDomain, AxisDomain] => {
   // de/in-crease the min/max value to make the graph a bit nicer
