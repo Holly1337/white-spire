@@ -1,26 +1,29 @@
-type PlayerName = string
+type RankChange = number | 'new'
 
-interface Rank {
-  rank: number,
-  playerName: PlayerName,
+interface RankEntry {
+  id: number
+  timestamp: string
+  playername: string
+  position: number
   score: number
 }
 
-type Ranks = Rank[]
-
-interface LeaderboardEntry {
-  id: number,
-  ranks: Ranks
+interface RankData {
+  date: number,
+  rank: number | null
 }
 
-type LeaderboardData = LeaderboardEntry[]
-
-type RankChange = number | 'new'
-
-interface PlayerData extends Rank {
-  rankChange: RankChange
+interface PlayerLeaderboardData {
+  current: RankEntry,
+  previous?: RankEntry
 }
 
-interface PlayerHistory {
-  [id: string]: number[]
+// get current leaderboard by mapping over PlayersData, get the current entries, and sort by rank
+interface PlayersData {
+  [id: string]: PlayerLeaderboardData
+}
+
+interface PlayerDataResponse {
+  count: number,
+  rows: RankEntry[]
 }

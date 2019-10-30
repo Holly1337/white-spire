@@ -2,14 +2,12 @@ import React from 'react'
 import TableRow from './TableRow/TableRow'
 
 interface Props {
-  players: PlayerData[]
-  playerHistory: PlayerHistory
-  leaderboardData: LeaderboardData
+  entries: RankEntry[]
+  playersData: PlayersData
 }
 
-const Table = (props: Props) => {
-  const { players } = props
-  if (players.length === 0) {
+const Table: React.FC<Props> = ({ entries, playersData }) => {
+  if (entries.length === 0) {
     return <h1 className='text-center'>No data yet :(</h1>
   }
 
@@ -26,11 +24,14 @@ const Table = (props: Props) => {
         </div>
         <div className='tbody'>
           {
-            players.map(
-              (player, index: number) => {
-                // const rankHistory = props.playerHistory[player.playerName]
-                return <TableRow key={index} {...player} leaderboardData={props.leaderboardData} />
-              }
+            entries.map(
+              (entry) => (
+                <TableRow
+                  key={entry.id}
+                  entry={entry}
+                  playerData={playersData[entry.playername]}
+                />
+              )
             )
           }
         </div>

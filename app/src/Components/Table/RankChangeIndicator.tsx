@@ -7,7 +7,6 @@ interface Props {
 }
 
 const RankChangeIndicator = ({ change, rank }: Props) => {
-  console.log(rank, change)
   const rankClassName = classnames({
     'rank-change': true,
     'rank-up': change !== 'new' && change > 0,
