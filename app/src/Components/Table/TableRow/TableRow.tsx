@@ -18,7 +18,8 @@ const TableRow: React.FC<TableRowProps> = ({ entry, playerData }) => {
 
   const loadRankData = async () => {
     try {
-      const response = await fetch(`/api/v1/player/${playername}`)
+      const encodedPlayerName = encodeURIComponent(playername)
+      const response = await fetch(`/api/v1/player/${encodedPlayerName}`)
       const json: PlayerDataResponse = await response.json()
       const data: RankEntry[] = json.rows
       const responseRankData: RankData[] = data.map(rankEntry => ({
