@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Label, AxisDomain, Legend
+  LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Label, AxisDomain, Legend, TickFormatterFunction
 } from 'recharts'
 import { getRankDomain, getScoreDomain } from '../../../lib/chartDomains'
 
@@ -14,8 +14,11 @@ const RankHistory: React.FC<Props> = ({ data }) => {
 
   const rankDomain = getRankDomain(data)
   const scoreDomain = getScoreDomain(data)
-  console.log(rankDomain)
-  console.log(scoreDomain)
+
+  const tickFormatter: TickFormatterFunction = (tickData) => {
+    const date = new Date(tickData)
+    return date.toLocaleTimeString().substr(0, 5)
+  }
 
   return (
     <ResponsiveContainer width={'100%'} aspect={2 / 1}>
@@ -26,10 +29,7 @@ const RankHistory: React.FC<Props> = ({ data }) => {
         <XAxis
           dataKey='date'
           stroke='white'
-          tickFormatter={(tickData) => {
-            const date = new Date(tickData)
-            return date.toLocaleTimeString().substr(0, 5)
-          }}
+          tickFormatter={tickFormatter}
         />
         <CartesianGrid stroke='#666666' vertical={false} />
         <YAxis yAxisId={'left'} orientation='left' stroke='white' reversed={true} domain={rankDomain} />
