@@ -9,7 +9,7 @@ interface Props {
 
 const RankHistory: React.FC<Props> = ({ data }) => {
   // limit to last 48 entries
-  data = data.slice(0, 48)
+  data = [...data].reverse().slice(0, 48)
   return (
     <ResponsiveContainer width={'100%'} aspect={2 / 1}>
       <LineChart
