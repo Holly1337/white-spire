@@ -1,7 +1,15 @@
 import React from 'react'
 import {
-  LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Label
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  TickFormatterFunction,
+  XAxis,
+  YAxis
 } from 'recharts'
+import { getRankDomain, getScoreDomain } from '../../../lib/chartDomains'
 
 interface Props {
   data: RankData[]
@@ -10,6 +18,15 @@ interface Props {
 const RankHistory: React.FC<Props> = ({ data }) => {
   // limit to last 48 entries
   data = [...data].reverse().slice(0, 48)
+
+  const rankDomain = getRankDomain(data)
+  const scoreDomain = getScoreDomain(data)
+
+  const tickFormatter: TickFormatterFunction = (tickData) => {
+    const date = new Date(tickData)
+    return date.toLocaleTimeString().substr(0, 5)
+  }
+
   return (
     <ResponsiveContainer width={'100%'} aspect={2 / 1}>
       <LineChart
@@ -19,14 +36,12 @@ const RankHistory: React.FC<Props> = ({ data }) => {
         <XAxis
           dataKey='date'
           stroke='white'
-          tickFormatter={(tickData) => {
-            const date = new Date(tickData)
-            return date.toLocaleTimeString().substr(0, 5)
-          }}
+          tickFormatter={tickFormatter}
         />
         <CartesianGrid stroke='#666666' vertical={false} />
-        <YAxis yAxisId={'left'} stroke='white' reversed={true} />
-        <YAxis yAxisId={'right'} orientation='right' stroke='#ffff65' reversed={false} />
+        <YAxis yAxisId={'left'} orientation='left' stroke='white' reversed={true} domain={rankDomain} />
+        <YAxis yAxisId={'right'} orientation='right' stroke='gold' reversed={false} domain={scoreDomain} />
+        <Legend verticalAlign='top' height={36} />
         <Line
           type='step'
           dot={false}
@@ -40,7 +55,7 @@ const RankHistory: React.FC<Props> = ({ data }) => {
           type='step'
           dot={false}
           dataKey='score'
-          stroke='#ffff65'
+          stroke='gold'
           strokeWidth={3}
           isAnimationActive={false}
           yAxisId={'right'}
