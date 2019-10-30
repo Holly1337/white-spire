@@ -70,7 +70,7 @@ const TableRow: React.FC<TableRowProps> = ({ entry, playerData }) => {
           <PlayerName playerName={playername} />
         </span>
         <span className='score-column'>
-          {entry.position}
+          {entry.score}
         </span>
         <span className='history-column'>
             <button
