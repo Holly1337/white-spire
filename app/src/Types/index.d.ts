@@ -9,8 +9,9 @@ interface RankEntry {
 }
 
 interface RankData {
-  date: number,
+  date: number
   rank: number | null
+  score: number | null
 }
 
 interface PlayerLeaderboardData {

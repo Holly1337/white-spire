@@ -23,7 +23,8 @@ const TableRow: React.FC<TableRowProps> = ({ entry, playerData }) => {
       const data: RankEntry[] = json.rows
       const responseRankData: RankData[] = data.map(rankEntry => ({
         date: new Date(rankEntry.timestamp).getTime(),
-        rank: rankEntry.position
+        rank: rankEntry.position,
+        score: rankEntry.score
       }))
       setRankData(responseRankData)
     } catch (e) {

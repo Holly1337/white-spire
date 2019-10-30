@@ -24,8 +24,9 @@ const RankHistory: React.FC<Props> = ({ data }) => {
             return date.toLocaleTimeString().substr(0, 5)
           }}
         />
-        <YAxis stroke='white' reversed={true} />
         <CartesianGrid stroke='#666666' vertical={false} />
+        <YAxis yAxisId={'left'} stroke='white' reversed={true} />
+        <YAxis yAxisId={'right'} orientation='right' stroke='#ffff65' reversed={false} />
         <Line
           type='step'
           dot={false}
@@ -33,7 +34,16 @@ const RankHistory: React.FC<Props> = ({ data }) => {
           stroke='white'
           strokeWidth={3}
           isAnimationActive={false}
-          yAxisId={0}
+          yAxisId={'left'}
+        />
+        <Line
+          type='step'
+          dot={false}
+          dataKey='score'
+          stroke='#ffff65'
+          strokeWidth={3}
+          isAnimationActive={false}
+          yAxisId={'right'}
         />
       </LineChart>
     </ResponsiveContainer>
