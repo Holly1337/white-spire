@@ -33,7 +33,7 @@ const RankHistory: React.FC<Props> = ({ data }) => {
         />
         <CartesianGrid stroke='#666666' vertical={false} />
         <YAxis yAxisId={'left'} orientation='left' stroke='white' reversed={true} domain={rankDomain} />
-        <YAxis yAxisId={'right'} orientation='right' stroke='#ffff65' reversed={false} domain={scoreDomain} />
+        <YAxis yAxisId={'right'} orientation='right' stroke='gold' reversed={false} domain={scoreDomain} />
         <Legend verticalAlign='top' height={36} />
         <Line
           type='step'
@@ -48,7 +48,7 @@ const RankHistory: React.FC<Props> = ({ data }) => {
           type='step'
           dot={false}
           dataKey='score'
-          stroke='#ffff65'
+          stroke='gold'
           strokeWidth={3}
           isAnimationActive={false}
           yAxisId={'right'}
