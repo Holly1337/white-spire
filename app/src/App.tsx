@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Table from './Components/Table/Table'
 import LastUpdated from './Components/LastUpdated'
-import DataLoadingIndicator from './Components/DataLoadingIndicator'
+import DataLoadingIndicator from './Components/Notifications/DataLoadingIndicator'
 import Header from './Components/Layout/Header'
 import SiteWrapper from './Components/Layout/SiteWrapper'
 import DataInfoFooter from './Components/Layout/DataInfoFooter'
