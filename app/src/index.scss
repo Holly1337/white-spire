@@ -1,10 +1,17 @@
 $font-headline: 'Raleway', sans-serif;
 $font-text: 'Roboto', sans-serif;
 
+$white: white;
+$grey: #3C3F4D;
+$dark-grey: #25262e;
+$green: lawngreen;
+$red: orangered;
+$gold: gold;
+
 body {
   background-color: #111111;
   font-family: $font-text;
-  color: white;
+  color: $white;
 
   //background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
   //linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
@@ -24,7 +31,6 @@ body {
 }
 
 .site-wrapper {
-  min-height: 100vh;
   max-width: 850px;
   width: 80%;
   margin: 0 auto;
@@ -54,7 +60,7 @@ body {
 
 .header {
   max-width: 650px;
-  padding: 30px 30px 0 30px;
+  padding: 30px 30px 30px 30px;
   color: black;
   font-weight: 900;
   font-size: 40px;
@@ -66,7 +72,7 @@ body {
   font-family: $font-headline;
 
   .main {
-    background-color: white;
+    background-color: $white;
     padding: 10px 0;
     margin: 0 auto;
     width: 80%
@@ -78,7 +84,7 @@ body {
     background-color: #222222;
     margin: 0 auto;
     width: 60%;
-    color: white;
+    color: $white;
     transform: rotate(-2deg);
   }
 }
@@ -120,7 +126,7 @@ body {
     }
 
     .tr .th {
-      background-color: #3C3F4D;
+      background-color: $grey;
       font-weight: 700;
       text-transform: uppercase;
       font-family: $font-headline;
@@ -136,7 +142,7 @@ body {
     }
 
     &:nth-child(2n) {
-      background-color: #25262e;
+      background-color: $dark-grey;
     }
     &:nth-child(2n + 1) {
       background-color: #0b0b0f;
@@ -194,15 +200,15 @@ body {
 }
 
 .color-green {
-  color: lawngreen;
+  color: $green;
 }
 
 .color-red {
-  color: orangered;
+  color: $red;
 }
 
 .color-gold {
-  color: gold;
+  color: $gold;
 }
 
 button.button-history {
@@ -212,14 +218,14 @@ button.button-history {
   /* show a hand cursor on hover; some argue that we
   should keep the default arrow cursor for buttons */
   cursor: pointer;
-  border: 1px solid white;
+  border: 1px solid $white;
   padding: 1px 10px;
   border-radius: 5px;
   &:hover {
     border-color: #939393;
   }
   &:active {
-    background-color: white;
+    background-color: $white;
     color: black;
   }
   &:focus {
@@ -242,7 +248,7 @@ button.button-history {
   text-align: center;
   margin-top: 10px;
   a {
-    color: white;
+    color: $white;
   }
 }
 
@@ -258,4 +264,12 @@ button.button-history {
 
 .recharts-legend-item-text {
   text-transform: capitalize;
+}
+
+.player-search-input {
+  background-color: $dark-grey;
+  color: $white;
+  border: 2px solid black;
+  padding: 5px;
+  font-size: 12px;
 }
