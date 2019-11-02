@@ -1,6 +1,6 @@
 const models = require('../models');
 
-const getNewestTimestamp = async (limit = 1) => {
+const getNewestTimestamps = async (limit = 1) => {
   const response = await models.RankEntry.findAll({
     attributes: ['timestamp'],
     group: ['timestamp'],
@@ -13,6 +13,6 @@ const getNewestTimestamp = async (limit = 1) => {
 }
 
 module.exports = {
-  getNewestTimestamp
+  getNewestTimestamps
 }
 
