@@ -10,7 +10,7 @@ interface TableRowProps {
 }
 
 const TableRow: React.FC<TableRowProps> = ({ entry }) => {
-  const { position: rank, playername, positionChange: rankChange, timeInLord } = entry
+  const { position: rank, playername, score, positionChange: rankChange, timeInLord } = entry
   const [isLoadingHistoryData, setIsLoadingHistoryData] = useState<boolean>(false)
   const [showHistory, setShowHistory] = useState(false)
   const [rankData, setRankData] = useState<RankData[] | null | undefined>(null)
@@ -67,7 +67,10 @@ const TableRow: React.FC<TableRowProps> = ({ entry }) => {
           <PlayerName playerName={playername} />
         </span>
         <span className='score-column'>
-          {entry.score}
+          {timeInLord}h
+        </span>
+        <span className='score-column'>
+          {score}
         </span>
         <span className='history-column'>
             <button

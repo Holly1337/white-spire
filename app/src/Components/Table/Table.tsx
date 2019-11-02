@@ -17,6 +17,7 @@ const Table: React.FC<Props> = ({ entries }) => {
           <div className='tr'>
             <div className='th rank-column'>Rank</div>
             <div className='th name-column'>Name</div>
+            <div className='th score-column'>In Lord</div>
             <div className='th score-column'>Score</div>
             <div className='th history-column'>History</div>
           </div>
