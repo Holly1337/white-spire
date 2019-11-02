@@ -62,7 +62,7 @@ const App: React.FC = () => {
       <Header />
       <PlayerSearch value={searchText} onChange={onPlayerSearchChange} />
       <LastUpdated date={lastUpdated} />
-      <Table entries={leaderboard} />
+      <Table entries={filteredLeaderboard} />
       <DataInfoFooter />
     </SiteWrapper>
   )
