@@ -10,18 +10,18 @@ import PlayerSearch from './Components/PlayerSearch'
 
 const App: React.FC = () => {
   const [searchText, setSearchText] = useState<string>('')
-  const [playersData, setPlayersData] = useState<PlayersData | null>(null)
+  const [leaderboard, setLeaderboard] = useState<FullLeaderboardEntry[] | null | undefined>(null)
 
   useEffect(() => {
-    fetch('/api/v1/leaderboard?limit=2')
+    fetch('/api/v1/fullLeaderboard')
       .then(res => res.json())
-      .then((data: RankEntry[]) => {
-        const playersData = rankEntriesToPlayersData(data)
-        setPlayersData(playersData)
+      .then((leaderboard: FullLeaderboardEntry[]) => {
+        setLeaderboard(leaderboard)
       })
+      .catch(() => { setLeaderboard(undefined) })
   }, [])
 
-  if (playersData === null) {
+  if (leaderboard === null) {
     return (
       <SiteWrapper>
         <Header />
@@ -30,10 +30,17 @@ const App: React.FC = () => {
     )
   }
 
+  if (typeof leaderboard === 'undefined') {
+    return (
+      <SiteWrapper>
+        <Header />
+        <h1>Error loading data</h1>
+      </SiteWrapper>
+    )
+  }
+
   const lowerCaseSearch = searchText.toLowerCase()
-  const leaderboard: RankEntry[] = Object.values(playersData).map(
-    entry => entry.current
-  ).filter(
+  const filteredLeaderboard: FullLeaderboardEntry[] = Object.values(leaderboard).filter(
     entry => entry.playername.toLowerCase().includes(lowerCaseSearch)
   ).sort(
     (p1, p2) => p1.position - p2.position
@@ -55,7 +62,7 @@ const App: React.FC = () => {
       <Header />
       <PlayerSearch value={searchText} onChange={onPlayerSearchChange} />
       <LastUpdated date={lastUpdated} />
-      <Table entries={leaderboard} playersData={playersData} />
+      <Table entries={leaderboard} />
       <DataInfoFooter />
     </SiteWrapper>
   )

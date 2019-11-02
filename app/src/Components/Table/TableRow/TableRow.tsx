@@ -6,12 +6,11 @@ import LoadingRankHistoryData from '../../Notifications/LoadingRankHistoryData'
 import LoadingRankHistoryDataError from '../../Notifications/LoadingRankHistoryDataError'
 
 interface TableRowProps {
-  entry: RankEntry
-  playerData: PlayerLeaderboardData
+  entry: FullLeaderboardEntry
 }
 
-const TableRow: React.FC<TableRowProps> = ({ entry, playerData }) => {
-  const { position: rank, playername } = entry
+const TableRow: React.FC<TableRowProps> = ({ entry }) => {
+  const { position: rank, playername, positionChange: rankChange, timeInLord } = entry
   const [isLoadingHistoryData, setIsLoadingHistoryData] = useState<boolean>(false)
   const [showHistory, setShowHistory] = useState(false)
   const [rankData, setRankData] = useState<RankData[] | null | undefined>(null)
@@ -45,12 +44,6 @@ const TableRow: React.FC<TableRowProps> = ({ entry, playerData }) => {
       await loadRankData()
       setIsLoadingHistoryData(false)
     }
-  }
-
-  const { current, previous } = playerData
-  let rankChange: RankChange = 'new'
-  if (typeof previous !== 'undefined') {
-    rankChange = previous.position - current.position
   }
 
   let rankHistory = null

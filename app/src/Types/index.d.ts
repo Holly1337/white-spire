@@ -1,4 +1,4 @@
-type RankChange = number | 'new'
+type RankChange = number | null
 
 interface RankEntry {
   id: number
@@ -6,6 +6,11 @@ interface RankEntry {
   playername: string
   position: number
   score: number
+}
+
+interface FullLeaderboardEntry extends RankEntry {
+  timeInLord: number,
+  positionChange: RankChange
 }
 
 interface RankData {

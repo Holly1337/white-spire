@@ -9,13 +9,13 @@ interface Props {
 const RankChangeIndicator = ({ change, rank }: Props) => {
   const rankClassName = classnames({
     'rank-change': true,
-    'rank-up': change !== 'new' && change > 0,
-    'rank-down': change !== 'new' && change < 0,
+    'rank-up': change !== null && change > 0,
+    'rank-down': change !== null && change < 0,
     'rank-no-change': change === 0,
   })
 
   let icon
-  if (change === 'new') {
+  if (change === null) {
     icon = <i className='fa fa-star color-gold' />
   } else if (change < 0) {
     icon = <i className='fa fa-caret-down color-red' />
@@ -32,7 +32,7 @@ const RankChangeIndicator = ({ change, rank }: Props) => {
           {icon}
         </span>
         <span className='rank-change-value'>
-          {change !== 'new' && change !== 0 && change}
+          {change !== null && change !== 0 && change}
         </span>
       </span>
 
