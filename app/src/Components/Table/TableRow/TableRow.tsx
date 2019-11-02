@@ -6,12 +6,11 @@ import LoadingRankHistoryData from '../../Notifications/LoadingRankHistoryData'
 import LoadingRankHistoryDataError from '../../Notifications/LoadingRankHistoryDataError'
 
 interface TableRowProps {
-  entry: RankEntry
-  playerData: PlayerLeaderboardData
+  entry: FullLeaderboardEntry
 }
 
-const TableRow: React.FC<TableRowProps> = ({ entry, playerData }) => {
-  const { position: rank, playername } = entry
+const TableRow: React.FC<TableRowProps> = ({ entry }) => {
+  const { position: rank, playername, score, positionChange: rankChange, timeInLord } = entry
   const [isLoadingHistoryData, setIsLoadingHistoryData] = useState<boolean>(false)
   const [showHistory, setShowHistory] = useState(false)
   const [rankData, setRankData] = useState<RankData[] | null | undefined>(null)
@@ -47,12 +46,6 @@ const TableRow: React.FC<TableRowProps> = ({ entry, playerData }) => {
     }
   }
 
-  const { current, previous } = playerData
-  let rankChange: RankChange = 'new'
-  if (typeof previous !== 'undefined') {
-    rankChange = previous.position - current.position
-  }
-
   let rankHistory = null
   if (showHistory) {
     if (rankData === null) {
@@ -74,7 +67,10 @@ const TableRow: React.FC<TableRowProps> = ({ entry, playerData }) => {
           <PlayerName playerName={playername} />
         </span>
         <span className='score-column'>
-          {entry.score}
+          {timeInLord}h
+        </span>
+        <span className='score-column'>
+          {score}
         </span>
         <span className='history-column'>
             <button

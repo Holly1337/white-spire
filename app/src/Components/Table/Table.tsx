@@ -2,11 +2,10 @@ import React from 'react'
 import TableRow from './TableRow/TableRow'
 
 interface Props {
-  entries: RankEntry[]
-  playersData: PlayersData
+  entries: FullLeaderboardEntry[]
 }
 
-const Table: React.FC<Props> = ({ entries, playersData }) => {
+const Table: React.FC<Props> = ({ entries }) => {
   if (entries.length === 0) {
     return <h1 className='text-center'>No data yet :(</h1>
   }
@@ -18,6 +17,7 @@ const Table: React.FC<Props> = ({ entries, playersData }) => {
           <div className='tr'>
             <div className='th rank-column'>Rank</div>
             <div className='th name-column'>Name</div>
+            <div className='th score-column'>In Lord</div>
             <div className='th score-column'>Score</div>
             <div className='th history-column'>History</div>
           </div>
@@ -29,7 +29,6 @@ const Table: React.FC<Props> = ({ entries, playersData }) => {
                 <TableRow
                   key={entry.id}
                   entry={entry}
-                  playerData={playersData[entry.playername]}
                 />
               )
             )
