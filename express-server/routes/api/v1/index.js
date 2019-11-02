@@ -53,13 +53,13 @@ router.get('/leaderboard', async (req, res) => {
 
 /**
  * returns all entries for the given exact timestamp. Ordered by position
- * :timestamp - 'YYYY-MM-DD HH-mm-ss'
+ * :timestamp - 'YYYY-MM-DD HH:mm:ss'
  */
 router.get('/leaderboard/:timestamp', async (req, res, next) => {
   const timestampParam = req.params.timestamp
   const timestamp = moment(timestampParam, 'YYYY-MM-DD HH:mm:ss', true)
   if (!timestamp.isValid()) {
-    next()
+    res.json({ error: 'Invalid timestamp format. Must be YYYY-MM-DD HH:mm:ss'})
     return
   }
 
@@ -73,38 +73,21 @@ router.get('/leaderboard/:timestamp', async (req, res, next) => {
 })
 
 /**
- * returns all entries for the given date. Ordered by position
- * :timestamp - 'YYYY-MM-DD'
- */
-router.get('/leaderboard/:date', async (req, res, next) => {
-  const dateParam = req.params.date
-  const date = moment(dateParam, 'YYYY-MM-DD', true)
-  if (!date.isValid()) {
-    res.json({ error: 'Invalid format' })
-    return
-  }
-
-  const from = `${dateParam} 00:00:00`
-  const to = `${dateParam} 23:59:59`
-
-  models.RankEntry.findAll({
-    where: { timestamp: { [Op.between]: [from, to] } },
-    order: [['position', 'ASC']],
-  }).then(entries => {
-    res.setHeader('Content-Type', 'application/json')
-    res.json(entries)
-  })
-})
-
-/**
- * returns all entries for the given date and hour. . Ordered by timestamp DESC; position ASC
- * :date - YY-MM-DD
+ * returns all entries for the given date and hour. Ordered by timestamp DESC; position ASC
+ * :date - YYYY-MM-DD
  * :hour - HH
  */
 router.get('/leaderboard/:date/:hour(\\d+)', async (req, res) => {
   const dateParam = req.params.date
   const hourParam = req.params.hour
   const intHour = parseInt(hourParam)
+
+  const date = moment(dateParam, 'YYYY-MM-DD', true)
+  if (!date.isValid()) {
+    res.json({ error: 'Invalid date format. Must be YYYY-MM-DD' })
+    return
+  }
+
   if (intHour < 0 || intHour > 23) {
     res.json({ error: 'hour must be between 0 and 23'})
     return
@@ -142,12 +125,37 @@ router.get('/leaderboards/:amount(\\d+)', async (req, res) => {
 })
 
 /**
- *
+ * returns all entries for the given date. Ordered by position
+ * :date - 'YYYY-MM-DD'
+ */
+router.get('/leaderboards/:date', async (req, res, next) => {
+  const dateParam = req.params.date
+  const date = moment(dateParam, 'YYYY-MM-DD', true)
+  if (!date.isValid()) {
+    res.json({ error: 'Invalid date format. Must be YYYY-MM-DD' })
+    return
+  }
+
+  const from = `${dateParam} 00:00:00`
+  const to = `${dateParam} 23:59:59`
+
+  models.RankEntry.findAll({
+    where: { timestamp: { [Op.between]: [from, to] } },
+    order: [['position', 'ASC']],
+  }).then(entries => {
+    res.setHeader('Content-Type', 'application/json')
+    res.json(entries)
+  })
+})
+
+/**
+ * returns a list of all players and how long (in hours) they have been a lord. Ordered by time.
  */
 router.get('/timeInLord', async (req, res) => {
   models.RankEntry.findAll({
     group: ['playername'],
     attributes: ['playername', [Sequelize.fn('COUNT', 'playername'), 'time']],
+    order: [[Sequelize.col('time'), 'DESC']]
   }).then(entries => {
     res.setHeader('Content-Type', 'application/json')
     res.json(entries)
