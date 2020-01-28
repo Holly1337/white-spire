@@ -21,16 +21,10 @@ const MAX_LEADERBOARD_LIMIT = 48
 router.get('/fullLeaderboard', async (req, res) => {
   let [current, previous] = await getNewestTimestamps(2)
 
-  const currentLeaderboard = await models.sequelize.query(`
-    SELECT
-    *,
-    (SELECT COUNT(*) FROM RankEntries as sub WHERE entries.playername = sub.playername) as timeInLord
-    FROM RankEntries as entries
-     WHERE (timestamp = :current)
-     ORDER BY position ASC;
-     `,
-    { replacements: { current: getStringDate(current) }, type: models.sequelize.QueryTypes.SELECT }
-  )
+  const currentLeaderboard = await models.RankEntry.findAll({
+    where: { timestamp: current },
+    order: [['position', 'ASC']],
+  })
 
   const previousLeaderboard = await models.RankEntry.findAll({
     where: { timestamp: previous },
