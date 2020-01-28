@@ -15,8 +15,8 @@ const generateFullLeaderboard = (current, previous) => {
       }
 
       return {
-        ...entry,
-        // timeInLord: 0,
+        ...entry.dataValues,
+        timeInLord: 0,
         positionChange
       }
     }
