@@ -1,3 +1,5 @@
+const { generateFullLeaderboard } =  require('../../../lib/generateFullLeaderboard')
+
 const { getStringDate } = require('../../../lib/format')
 const { getNewestTimestamps } = require('../../../lib/queries')
 
@@ -18,23 +20,20 @@ const MAX_LEADERBOARD_LIMIT = 48
  */
 router.get('/fullLeaderboard', async (req, res) => {
   let [current, previous] = await getNewestTimestamps(2)
-  current = getStringDate(current)
-  previous = getStringDate(previous)
 
-  models.sequelize.query(`
-SELECT
-*,
-(SELECT COUNT(*) FROM RankEntries as sub WHERE entries.playername = sub.playername) as timeInLord,
-(SELECT (sub.position - entries.position) FROM RankEntries AS sub WHERE entries.playername = sub.playername AND timestamp = :previous )  AS positionChange
-FROM RankEntries as entries
- WHERE (timestamp = :current)
- ORDER BY position ASC;
- `,
-    { replacements: { current, previous }, type: models.sequelize.QueryTypes.SELECT }
-    ).then(entries => {
-    res.setHeader('Content-Type', 'application/json')
-    res.json(entries)
+  const currentLeaderboard = await models.RankEntry.findAll({
+    where: { timestamp: current },
+    order: [['position', 'ASC']],
   })
+
+  const previousLeaderboard = await models.RankEntry.findAll({
+    where: { timestamp: previous },
+    order: [['position', 'ASC']],
+  })
+
+  const fullLeaderboard = generateFullLeaderboard(currentLeaderboard, previousLeaderboard)
+  res.setHeader('Content-Type', 'application/json')
+  res.json(fullLeaderboard)
 })
 
 /**
