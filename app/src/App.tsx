@@ -60,9 +60,11 @@ const App: React.FC = () => {
   return (
     <SiteWrapper>
       <Header />
-      <PlayerSearch value={searchText} onChange={onPlayerSearchChange} />
-      <LastUpdated date={lastUpdated} />
-      <Table entries={filteredLeaderboard} />
+      <div className='table-wrapper'>
+        <PlayerSearch value={searchText} onChange={onPlayerSearchChange} />
+        <LastUpdated date={lastUpdated} />
+        <Table entries={filteredLeaderboard} />
+      </div>
       <DataInfoFooter />
     </SiteWrapper>
   )

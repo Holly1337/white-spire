@@ -42,11 +42,12 @@ body {
 .last-updated {
   display: flex;
   justify-content: space-between;
-  margin: 20px 0px -20px 0px;
-
-  @media (min-width: 768px) {
-    margin: 20px 30px -20px 30px;
-  }
+  margin-bottom: 15px;
+  //margin: 20px 0px -20px 0px;
+  //
+  //@media (min-width: 768px) {
+  //  margin: 20px 30px -20px 30px;
+  //}
 }
 
 @mixin table-item {
@@ -89,10 +90,12 @@ body {
   }
 }
 
-.table {
+.table-wrapper {
   padding: 30px;
-  padding-top: 35px;
   background-color: #0B0C10;
+}
+
+.table {
   height: auto;
   margin: 0 auto;
 
@@ -131,6 +134,7 @@ body {
       font-weight: 700;
       text-transform: uppercase;
       font-family: $font-headline;
+      align-self: auto;
     }
 
   }
@@ -265,6 +269,16 @@ button.button-history {
 
 .recharts-legend-item-text {
   text-transform: capitalize;
+}
+
+.player-search {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: 15px;
+
+  .fa.fa-search {
+    margin-right: 5px;
+  }
 }
 
 .player-search-input {
