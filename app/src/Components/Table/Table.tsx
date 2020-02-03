@@ -7,7 +7,7 @@ interface Props {
 
 const Table: React.FC<Props> = ({ entries }) => {
   if (entries.length === 0) {
-    return <h1 className='text-center'>No data yet :(</h1>
+    return <h1 className='text-center'>No data :(</h1>
   }
 
   return (
